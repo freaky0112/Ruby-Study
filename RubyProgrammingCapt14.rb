@@ -1,4 +1,4 @@
-#创建数组
+﻿#创建数组
 def split_str(str)
 	return coloum=str.split(/ /)
 end
@@ -37,26 +37,36 @@ end
 
 def han2num(str)
 	i=0
-	puts str
-	puts str.index("千")
-	# i+=get_num(str[-1])*1000
-	# i+=get_num(str[str.index["百"]-1])*100
-	# i+=get_num(str[str.index["十"]-1])*10
-	# i+=get_num(str[str.size-1])*1
-	retun i
+	i+=splite_str(str,"千")*1000
+	p i
+	i+=splite_str(str,"百")*100
+	p i
+	i+=splite_str(str,"十")*10
+	p i
+	i+=get_num(str[-1,1])
+	return i
 end
 
 def get_num(char)	
-	number="零、一、二、三、四、五、六、七、八、九"
-	num=number.split_str(/、/)
-	num.each_with_index do |elem,i|
-		if Num[i]==char
-			return i+1
+	number=["零","一","二","三","四","五","六","七","八","九"]
+	number.each_with_index do |elem,i|
+		p elem
+		if elem==char
+			return i
 		end
 	end
 	return 0
 end
 
+def splite_str(str,char)
+	m=str.split(char)
+	if m.size==2
+
+		return get_num(m[0])
+	else
+		return 0
+	end
+end
 
 # str="Ruby is an object oriented programming language"
 # #排序
@@ -68,5 +78,5 @@ end
 # #统计字符串中的字符及其数量并输出结果
 # statistics_str(str)
 #中文数字转数字
-str=gets()
+str="一千二百三十四"
 puts han2num(str)
