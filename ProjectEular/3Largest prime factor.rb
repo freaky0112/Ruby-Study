@@ -3,7 +3,7 @@ def defPrimes(limit)
 	i=2
 	while i<limit
 		if primes[i]
-			n=2
+			n=i
 			while i*n<limit
 				primes[i*n]=false
 				n+=1
