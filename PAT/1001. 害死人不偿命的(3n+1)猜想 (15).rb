@@ -16,11 +16,13 @@ def getStep(n)
 	return n
 end
 
-str=gets.chomp
+# str=gets.chomp
+str=6
 n=str.to_i
 i=0
 while n!=1
 	n=getStep(n)
+	puts n
 	i=i+1
 end
-puts i
+# puts i
