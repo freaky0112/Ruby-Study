@@ -12,6 +12,9 @@
 # 输出样例：
 # THU 14:04
 
+
+
+
 DAY=["SUN","MON","TUE","WED","THU","FRI","SAT"]
 HH=Array(0..9)
 Array('A'..'N').each { |e|
@@ -26,4 +29,12 @@ loop {
 	end
 	i+=1
  }
- puts tips
+
+str=tips[0]+tips[1]
+i=0
+while i<str.length
+	if str.squeeze(e).length!=str.length
+		put e
+	end
+	i+=1
+end
