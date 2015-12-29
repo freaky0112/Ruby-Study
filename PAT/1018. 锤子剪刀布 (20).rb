@@ -19,3 +19,113 @@
 # 5 3 2
 # 2 3 5
 # B B
+class Person	
+	def initialize()
+		@win=Array.new()
+		@lose=Array.new() 
+		@draw=Array.new()
+	end
+	def wins
+		return @win
+	end
+
+	def win(obj)
+		@win<<obj
+	end
+
+	def draw(obj)
+		@draw<<obj
+	end
+
+	def lose(obj)
+		@lose<<obj
+	end
+
+	def to_s
+		return "#{@win.count} #{@draw.count} #{@lose.count}"
+	end
+end
+
+def judge(a,b)
+	if a==b
+		return 0
+	elsif a!=b		
+		if a=="C"&&b=="J"
+			return 1
+		elsif a=="C"&&b=="B"
+			return 2
+		elsif a=="B"&&b=="C"
+			return 1
+		elsif a=="B"&&b=="J"		
+			return 2
+		elsif a=="J"&&b=="C"
+			return 2
+		elsif a=="J"&&b=="B"
+			return 1
+		end
+	end
+end
+
+class GP
+	def initialize(option,no)
+		@option=option
+		@no=no
+	end	
+
+	def no
+		return @no
+	end
+
+	def option
+		return @option
+	end
+
+	def to_s
+		return "#{@option} #{@no}"
+	end
+end
+
+
+def getMax(list)
+	hash=Hash.new { |hash, key| hash[key] =  0}
+	list.each { |e|
+		if hash[e]!=0
+			hash[e]+=1
+		else
+			hash[e]=1
+		end
+		# puts "#{e} #{hash[e]}"
+	  }
+	list=Array.new() 
+	hash.each_key { |key| 
+		list<<GP.new(key,hash[key])
+	 }
+	 list.sort! { |a, b| [b.no,a.option]<=>[a.no,b.option]}
+	 return list[0].option
+end
+
+
+no=gets.chomp.to_i
+A=Person.new()
+B=Person.new()
+while no>0
+	str=gets.chomp.split(' ')
+	a=str[0]
+	b=str[1]
+	case judge(a,b)
+	 when 1
+	 	A.win(a)
+	 	B.lose(b)
+	 when 2
+	 	A.lose(a)
+	 	B.win(b)
+	 when 0
+	 	A.draw(a)		
+	 	B.draw(b)
+	 end
+	no-=1
+end
+
+puts A
+puts B
+puts "#{getMax(A.wins)} #{getMax(B.wins)}"
