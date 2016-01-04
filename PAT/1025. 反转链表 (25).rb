@@ -3,8 +3,8 @@
 # 输入格式：
 # 每个输入包含1个测试用例。每个测试用例第1行给出第1个结点的地址、结点总个数正整数N(<= 105)、以及正整数K(<=N)，即要求反转的子链结点的个数。结点的地址是5位非负整数，NULL地址用-1表示。
 # 接下来有N行，每行格式为：
-# Address Data Next
-# 其中Address是结点地址，Data是该结点保存的整数数据，Next是下一结点的地址。
+# Address Data nextnode
+# 其中Address是结点地址，Data是该结点保存的整数数据，nextnode是下一结点的地址。
 # 输出格式：
 # 对每个测试用例，顺序输出反转后的链表，其上每个结点占一行，格式与输入相同。
 # 输入样例：
@@ -24,9 +24,62 @@
 # 68237 6 -1
 
 class Lindnode
-	def initialize(prev,no,next)
-		
+	def initialize(prev,no,nextnode)
+		@prev=prev
+		@no=no
+		@nextnode=nextnode
 	end
 	
+	def prev
+		return @prev	
+	end
 	
+	def no
+		return @no
+	end
+
+	def nextnode
+		return @nextnode
+	end
+
+	def to_s
+		return "#{@prev} #{no} #{nextnode}"
+	end
 end
+
+str=gets.chomp.split(' ')
+start=str[0]
+count=str[1].to_i
+k=str[2].to_i
+i=0
+readlist=Array.new()
+while i<count
+	str=gets.chomp.split(' ')
+	prev=str[0]
+	no=str[1]
+	nextnode=str[2]
+	node=Lindnode.new(prev,no,nextnode)
+	readlist<<node
+	i+=1
+end
+list=Array.new()
+while list.count!=readlist.count
+	readlist.each { |e| 
+		if e.prev==start
+			start=e.nextnode
+			list<<e
+			break
+		end
+	 }
+end 
+readlist.clear
+while list.count>=k
+	readlist<<list[0,k].reverse
+	if list.count==k
+		list.clear
+	else
+		list=list[k,list.count-k]		
+	end
+end
+readlist<<list
+puts readlist
