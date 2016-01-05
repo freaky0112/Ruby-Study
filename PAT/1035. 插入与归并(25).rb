@@ -22,38 +22,105 @@
 # 1 2 3 8 4 5 7 9 0 6
 def Insertion(list,match)
 	i=0
-	while list!=list.sort
-		number=list[i].to_i
-		list.delete_at(i)
-		n=0
-		while n<list.count
-			if number<list[n]
-				list.insert(n,number)
-				break
-			end
-			if n==list.count-1
-				list<<number
-				break
-			end
-			# puts  "#{n},#{list.to_s}"
-			n+=1
+	while i<list.count
+		temp=list[i]
+		j=i-1
+		while j>=0&&list[j]>temp
+			list[j+1]=list[j]
+			j-=1	
 		end
+		list[j+1]=temp
 		i+=1
-		if i>=list.count
-			i=0
-		end
-		puts list.to_s
-		puts match.to_s
 		if list==match
-			return "Insertion Sort"
+			return true
 		end
 	end
 	return false
 end
 
-def Merge(lsit)
-	
+# def merge_sort(list)
+# 	if list.count<=1
+# 		return list
+# 	end
+# 	mid=list.count/2
+# 	left=Array.new()
+# 	right=Array.new()
+# 	i=0
+# 	while i<mid
+# 		left<<list[i]
+# 		i+=1
+# 	end
+# 	while i<list.count
+# 		right<<list[i]
+# 		i+=1
+# 	end
+# 	left=merge_sort(left)
+# 	right=merge_sort(right)
+# 	puts left.to_s<<right.to_s
+# 	return merge(right,left)
+# end
+
+# def merge(right,left)
+# 	temp=Array.new() 
+# 	while right.count>0&&left.count>0
+# 		if left[0]<=right[0]
+# 			temp<<left[0]
+# 			left.shift
+# 		else
+# 			temp<<right[0]
+# 			right.shift
+# 		end
+# 	end 
+# 	if left.count>0
+# 		left.each { |e| 
+# 			temp<<e
+# 		 }
+# 	end
+# 	if right.count>0
+# 		right.each { |e| 
+# 			temp<<e
+# 		 }
+# 	end
+# 	return temp
+# end
+
+def min(x,y)
+	min=(x>y)?x:y
+	return min
 end
+
+def mergesort(list)
+	i=1
+	count=list.count
+	arr=Array.new(count)
+	while i<list.count
+		j=0
+		while j<count
+			low=j
+			mid=min(i+j,count)
+			high=min(i+i+j,count)
+			k=low
+			start1=low
+			end1=mid
+			start2=mid
+			end2=high
+			while start1<end1&&start2<end2
+				arr[k+=1]=list[start1]<list[start2]?list[start1+=1]:list[start2+=1]
+			end
+			while start1<end1
+				arr[k+=1]=list[start1+=1]
+			end
+			while start2<end2
+				arr[k+=1]=list[start2+=1]
+			end
+			j+=i+i
+			puts arr.to_s
+		end
+		i+=i
+	end
+
+end
+
 
 def strToNum(list)
 	newlist=Array.new()
@@ -65,4 +132,5 @@ end
 gets
 list=strToNum(gets.chomp.split(' '))
 match=strToNum(gets.chomp.split(' '))
-puts Insertion(list,match)
+# puts match.to_s
+puts mergesort(list)
