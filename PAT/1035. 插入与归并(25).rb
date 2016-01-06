@@ -20,7 +20,8 @@
 # 输出样例2：
 # Merge Sort
 # 1 2 3 8 4 5 7 9 0 6
-def Insertion(list,match)
+def insertion(list)
+	result=Array.new()
 	i=0
 	while i<list.count
 		temp=list[i]
@@ -31,94 +32,67 @@ def Insertion(list,match)
 		end
 		list[j+1]=temp
 		i+=1
-		if list==match
-			return true
-		end
+		result<<list.to_s
 	end
-	return false
+	return result
 end
 
-# def merge_sort(list)
-# 	if list.count<=1
-# 		return list
-# 	end
-# 	mid=list.count/2
-# 	left=Array.new()
-# 	right=Array.new()
-# 	i=0
-# 	while i<mid
-# 		left<<list[i]
-# 		i+=1
-# 	end
-# 	while i<list.count
-# 		right<<list[i]
-# 		i+=1
-# 	end
-# 	left=merge_sort(left)
-# 	right=merge_sort(right)
-# 	puts left.to_s<<right.to_s
-# 	return merge(right,left)
-# end
-
-# def merge(right,left)
-# 	temp=Array.new() 
-# 	while right.count>0&&left.count>0
-# 		if left[0]<=right[0]
-# 			temp<<left[0]
-# 			left.shift
-# 		else
-# 			temp<<right[0]
-# 			right.shift
-# 		end
-# 	end 
-# 	if left.count>0
-# 		left.each { |e| 
-# 			temp<<e
-# 		 }
-# 	end
-# 	if right.count>0
-# 		right.each { |e| 
-# 			temp<<e
-# 		 }
-# 	end
-# 	return temp
-# end
-
-def min(x,y)
-	min=(x>y)?x:y
-	return min
+def merge(right,left)
+	if right==nil
+		right=Array.new(0)
+	end
+	if left==nil
+		left=Array.new(0)
+	end
+	temp=Array.new() 
+	while right.count>0&&left.count>0
+		if left[0]<=right[0]
+			temp<<left[0]
+			left.shift
+		else
+			temp<<right[0]
+			right.shift
+		end
+	end 
+	if left.count>0
+		left.each { |e| 
+			temp<<e
+		 }
+	end
+	if right.count>0
+		right.each { |e| 
+			temp<<e
+		 }
+	end
+	return temp
 end
 
 def mergesort(list)
+	result=Array.new()
 	i=1
 	count=list.count
-	arr=Array.new(count)
+	arr=Array.new()
 	while i<list.count
 		j=0
 		while j<count
-			low=j
-			mid=min(i+j,count)
-			high=min(i+i+j,count)
-			k=low
-			start1=low
-			end1=mid
-			start2=mid
-			end2=high
-			while start1<end1&&start2<end2
-				arr[k+=1]=list[start1]<list[start2]?list[start1+=1]:list[start2+=1]
-			end
-			while start1<end1
-				arr[k+=1]=list[start1+=1]
-			end
-			while start2<end2
-				arr[k+=1]=list[start2+=1]
-			end
-			j+=i+i
-			puts arr.to_s
+			left=list[j,i]
+			right=list[j+i,i]
+			merge(right,left).each { |e| 
+				arr<<e
+			 }
+			j+=i+i			
 		end
+		if list!=arr
+			list.clear
+			arr.each { |e|
+				list<<e
+			  }
+			arr.clear
+		end
+		result<<list.to_s
 		i+=i
 	end
-
+	return result
 end
 
 
@@ -128,9 +102,40 @@ def strToNum(list)
 	return newlist
 end
 
+def strToResult(str)
+	str=str[1,str.length-2]
+	result=""
+	str.split(',').each { |e|
+		result<<"#{e.strip} "
+	  }
+	return result.rstrip
+end
+
 
 gets
-list=strToNum(gets.chomp.split(' '))
+list1=strToNum(gets.chomp.split(' '))
 match=strToNum(gets.chomp.split(' '))
-# puts match.to_s
-puts mergesort(list)
+list2=Array.new() 
+list1.each { |e|  
+	list2<<e
+}
+insertion=insertion(list1)
+merge=mergesort(list2)
+i=1
+while i<insertion.count
+	if insertion[i]==match.to_s
+		puts "Insertion Sort"
+		puts strToResult(insertion[i+1])
+	end
+	i+=1
+end
+i=0
+while i<merge.count
+	if merge[i]==match.to_s
+		puts "Merge Sort"
+		puts strToResult(merge[i+1])
+	end
+	i+=1
+end
+
+
