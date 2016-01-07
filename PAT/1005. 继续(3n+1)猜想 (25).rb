@@ -26,13 +26,9 @@ verify="3 5 6 7 8 11"
 
 array=Array.new()
 verify.split(' ').each { |e| 
-	if array.include?(e)
-		array.clear
-		break
-	end
 	array<<e.to_i
  }
-array.sort!{ |a, b| b<=>a }
+array.sort!.reverse!
 value=Array.new(100) { |i| i=true }
 array.each { |e|  
 	i=0
