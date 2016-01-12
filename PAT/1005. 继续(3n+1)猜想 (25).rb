@@ -18,18 +18,22 @@ def getStep(n)
 	return n
 end
 
-# no=gets.chomp.to_i
-# verify=gets.chomp
-no=6
-verify="3 5 6 7 8 11"
+no=gets.chomp.to_i
+verify=gets.chomp
+#no=6
+#verify="3 5 6 7 8 11"
 
 
 array=Array.new()
 verify.split(' ').each { |e| 
+	if array.include?(e)
+		array.clear
+		break
+	end
 	array<<e.to_i
  }
-array.sort!.reverse!
-value=Array.new(100) { |i| i=true }
+array.sort!{ |a, b| b<=>a }
+value=Array.new(1000) { |i| i=true }
 array.each { |e|  
 	i=0
 	while e!=1

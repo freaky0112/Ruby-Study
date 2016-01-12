@@ -32,55 +32,12 @@ def strToList(str)
 	}
 	return list.sort.reverse
 end
-
-def listToStr(list)
-	arr=Array.new()
-	list.each { |e| 
-		str=""
-		e.each { |chr| 
-			str<<"#{chr} "
-		 }
-		 arr<<str.rstrip
-	 }
-	 return arr
-end
-
+puts Time.now
 no=gets.chomp.to_i
 arr=strToList(gets.chomp.split(' '))
 m,n=getMatrix(no)
-list=Array.new(m) { |i| i=Array.new(n)}
-low=0
-while arr.count>0
-	i=0
-	j=1
-	while i<n
-		list[low][low+i]=arr.shift
-		i+=1
-	end	
-	# puts list.to_s
-	while j<m-1
-		list[low+j][low+i-1]=arr.shift
-		j+=1
-	end
-	# puts list.to_s
-	while i>low
-		list[j][low+i-1]=arr.shift
-		i-=1		
-	end
-	while j>low+1
-		list[low+j-1][i]=arr.shift
-		j-=1
-	end
-	m-=2
-	n-=2
-	low+=1
-	if n==1
-		list[low][low]=arr.shift
-		list[low+1][low]=arr.shift
-	end
-	if arr.count==0
-		break
-	end
-	# puts list.to_s
-end
-puts listToStr(list)
+
+row=Array.new(n)
+list=Array.new(m) { |i| i=row }
+list[0]=arr[0,n]
+puts list.to_s
